@@ -119,7 +119,7 @@ function ServiceFriendTip({ tipFriend, setTipFriend }: ServiceFriendTip) {
 function TotalPay({ bill, tip, tipFriend }: TotalPay) {
   const tipPercentage = (bill * tip) / 100;
   const tipFriendPercentage = (bill * tipFriend) / 100;
-  const average = (tipFriendPercentage + tipPercentage) / 2;
+  const average = Math.round((tipFriendPercentage + tipPercentage) / 2);
 
   return (
     <div>
