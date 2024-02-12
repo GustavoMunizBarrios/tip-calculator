@@ -18,6 +18,11 @@ interface TotalPay {
   tip: number;
   tipFriend: number;
 }
+interface ResetButton {
+  setBill: React.Dispatch<React.SetStateAction<number>>;
+  setTip: React.Dispatch<React.SetStateAction<number>>;
+  setTipFriend: React.Dispatch<React.SetStateAction<number>>;
+}
 
 export default function App() {
   const [bill, setBill] = useState(0);
@@ -30,7 +35,11 @@ export default function App() {
       <ServiceTip tip={tip} setTip={setTip} />
       <ServiceFriendTip tipFriend={tipFriend} setTipFriend={setTipFriend} />
       <TotalPay bill={bill} tip={tip} tipFriend={tipFriend} />
-      <ResetButton />
+      <ResetButton
+        setBill={setBill}
+        setTip={setTip}
+        setTipFriend={setTipFriend}
+      />
     </>
   );
 }
@@ -120,10 +129,15 @@ function TotalPay({ bill, tip, tipFriend }: TotalPay) {
     </div>
   );
 }
-function ResetButton() {
+function ResetButton({ setBill, setTip, setTipFriend }: ResetButton) {
+  function handleReset() {
+    setBill(0);
+    setTip(0);
+    setTipFriend(0);
+  }
   return (
     <>
-      <button>Reset</button>
+      <button onClick={handleReset}>Reset</button>
     </>
   );
 }
