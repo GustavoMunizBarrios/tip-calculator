@@ -1,12 +1,9 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import "./App.css";
 
 interface BillProps {
   bill: number;
   setBill: React.Dispatch<React.SetStateAction<number>>;
-}
-interface TotalPayProps {
-  bill: number;
 }
 interface ServiceTip {
   tip: number;
@@ -15,6 +12,11 @@ interface ServiceTip {
 interface ServiceFriendTip {
   tipFriend: number;
   setTipFriend: React.Dispatch<React.SetStateAction<number>>;
+}
+interface TotalPay {
+  bill: number;
+  tip: number;
+  tipFriend: number;
 }
 
 export default function App() {
@@ -27,13 +29,20 @@ export default function App() {
       <Bill bill={bill} setBill={setBill} />
       <ServiceTip tip={tip} setTip={setTip} />
       <ServiceFriendTip tipFriend={tipFriend} setTipFriend={setTipFriend} />
-      <TotalPay bill={bill} />
+      <TotalPay bill={bill} tip={tip} tipFriend={tipFriend} />
       <ResetButton />
     </>
   );
 }
 
 function Bill({ bill, setBill }: BillProps) {
+  const handleBillChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newBill = parseFloat(event.target.value);
+
+    if (!isNaN(newBill)) {
+      setBill(newBill);
+    }
+  };
   return (
     <div>
       <p>How much was the bill?</p>
@@ -41,7 +50,7 @@ function Bill({ bill, setBill }: BillProps) {
         type="text"
         placeholder="bill..."
         value={bill}
-        onChange={(event) => setBill(parseFloat(event.target.value))}
+        onChange={handleBillChange}
       ></input>
     </div>
   );
@@ -98,11 +107,15 @@ function ServiceFriendTip({ tipFriend, setTipFriend }: ServiceFriendTip) {
     </div>
   );
 }
-function TotalPay({ bill }: TotalPayProps) {
+function TotalPay({ bill, tip, tipFriend }: TotalPay) {
+  const tipPercentage = (bill * tip) / 100;
+  const tipFriendPercentage = (bill * tipFriend) / 100;
+  const average = (tipFriendPercentage + tipPercentage) / 2;
+
   return (
     <div>
       <h2>
-        You pay ${bill} ( ${bill} + $000 tip )
+        You pay ${bill + average} ( ${bill} + ${average} tip )
       </h2>
     </div>
   );
