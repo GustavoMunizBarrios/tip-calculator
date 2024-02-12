@@ -16,6 +16,7 @@ export default function App() {
     <>
       <Bill bill={bill} setBill={setBill} />
       <ServiceTip />
+      <ServiceFriendTip />
       <TotalPay bill={bill} />
       <ResetButton />
     </>
@@ -39,6 +40,19 @@ function ServiceTip() {
   return (
     <div>
       <p>How did you like the service?</p>
+      <select name="" id="">
+        <option>Disatisfied 0%</option>
+        <option>It was okay 5%</option>
+        <option>It was good 10%</option>
+        <option>Absolutely amazing 20%</option>
+      </select>
+    </div>
+  );
+}
+function ServiceFriendTip() {
+  return (
+    <div>
+      <p>How did your friend like the service?</p>
       <select name="" id="">
         <option>Disatisfied 0%</option>
         <option>It was okay 5%</option>
