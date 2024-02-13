@@ -61,8 +61,8 @@ function BillInput({ bill, setBill, children }: BillProps) {
     }
   };
   return (
-    <div>
-      <label>{children}</label>
+    <div className="div">
+      <label className="label">{children}</label>
       <input
         type="text"
         placeholder="bill..."
@@ -74,8 +74,8 @@ function BillInput({ bill, setBill, children }: BillProps) {
 }
 function ServiceTip({ tip, setTip, children }: ServiceTip) {
   return (
-    <div>
-      <label>{children}</label>
+    <div className="div">
+      <label className="label">{children}</label>
       <select
         name=""
         id=""
