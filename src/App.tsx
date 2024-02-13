@@ -4,14 +4,12 @@ import "./App.css";
 interface BillProps {
   bill: number;
   setBill: React.Dispatch<React.SetStateAction<number>>;
+  children: string;
 }
 interface ServiceTip {
   tip: number;
   setTip: React.Dispatch<React.SetStateAction<number>>;
-}
-interface ServiceFriendTip {
-  tipFriend: number;
-  setTipFriend: React.Dispatch<React.SetStateAction<number>>;
+  children: string;
 }
 interface TotalPay {
   bill: number;
@@ -31,20 +29,30 @@ export default function App() {
 
   return (
     <>
-      <Bill bill={bill} setBill={setBill} />
-      <ServiceTip tip={tip} setTip={setTip} />
-      <ServiceFriendTip tipFriend={tipFriend} setTipFriend={setTipFriend} />
-      <TotalPay bill={bill} tip={tip} tipFriend={tipFriend} />
-      <ResetButton
-        setBill={setBill}
-        setTip={setTip}
-        setTipFriend={setTipFriend}
-      />
+      <BillInput bill={bill} setBill={setBill}>
+        How much was the bill?
+      </BillInput>
+      <ServiceTip tip={tip} setTip={setTip}>
+        How did you like the service?
+      </ServiceTip>
+      <ServiceTip tip={tipFriend} setTip={setTipFriend}>
+        How did your friend like the service?
+      </ServiceTip>
+      {bill > 0 && (
+        <>
+          <TotalPay bill={bill} tip={tip} tipFriend={tipFriend} />
+          <ResetButton
+            setBill={setBill}
+            setTip={setTip}
+            setTipFriend={setTipFriend}
+          />
+        </>
+      )}
     </>
   );
 }
 
-function Bill({ bill, setBill }: BillProps) {
+function BillInput({ bill, setBill, children }: BillProps) {
   const handleBillChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newBill = parseFloat(event.target.value);
 
@@ -54,7 +62,7 @@ function Bill({ bill, setBill }: BillProps) {
   };
   return (
     <div>
-      <p>How much was the bill?</p>
+      <label>{children}</label>
       <input
         type="text"
         placeholder="bill..."
@@ -64,41 +72,15 @@ function Bill({ bill, setBill }: BillProps) {
     </div>
   );
 }
-function ServiceTip({ tip, setTip }: ServiceTip) {
+function ServiceTip({ tip, setTip, children }: ServiceTip) {
   return (
     <div>
-      <p>How did you like the service?</p>
+      <label>{children}</label>
       <select
         name=""
         id=""
         value={tip}
         onChange={(event) => setTip(Number(event.target.value))}
-      >
-        <option value={0} key={0}>
-          Disatisfied 0%
-        </option>
-        <option value={5} key={5}>
-          It was okay 5%
-        </option>
-        <option value={10} key={10}>
-          It was good 10%
-        </option>
-        <option value={20} key={20}>
-          Absolutely amazing 20%
-        </option>
-      </select>
-    </div>
-  );
-}
-function ServiceFriendTip({ tipFriend, setTipFriend }: ServiceFriendTip) {
-  return (
-    <div>
-      <p>How did your friend like the service?</p>
-      <select
-        name=""
-        id=""
-        value={tipFriend}
-        onChange={(event) => setTipFriend(Number(event.target.value))}
       >
         <option value={0} key={0}>
           Disatisfied 0%
